@@ -1,3 +1,8 @@
+----------
+Weather Application
+-------------------
+
+
 This app provides Weather data, at a limited scale though, based upon provided latitude, longitude,
 information of desired location (city)
 
@@ -7,7 +12,7 @@ information of desired location (city)
 
 This effort consumes the following android native / 3rd party libraries, in addition to clean code, as below:
 
-desigin pattern:  **MVVM** 
+design pattern:  **MVVM** 
 UI Toolkit / Utlity**: **Jetpack Compose**
 Dependency Injection**: **HILT**
 clean-code**: **repository-pattern**
