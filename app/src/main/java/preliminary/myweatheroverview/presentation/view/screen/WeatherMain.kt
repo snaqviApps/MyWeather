@@ -3,14 +3,11 @@ package preliminary.myweatheroverview.presentation.view.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -25,26 +22,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
-import coil.size.Size
-import preliminary.myweatherOverview.BuildConfig
 import preliminary.myweatherOverview.R
-import preliminary.myweatheroverview.data.remote.response.toTemperatureScales
 import preliminary.myweatheroverview.presentation.view.OpenWeatherViewModel
+import preliminary.myweatheroverview.presentation.view.composable.CityTitleItem
+import preliminary.myweatheroverview.presentation.view.composable.ImageItem
+import preliminary.myweatheroverview.presentation.view.composable.TemperaturesItem
 import preliminary.myweatheroverview.util.WeatherState
 
 
@@ -62,8 +51,7 @@ fun WeatherScreen(modifier: Modifier) {
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(4.dp)
-            .background(
-                Color(0xFFECE3CA)
+            .background(Color(0xFFECE3CA)
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -73,16 +61,15 @@ fun WeatherScreen(modifier: Modifier) {
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.matchParentSize()
         )
-
         LazyColumn(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp, 8.dp, 8.dp, 12.dp)
-
         ) {
 
+            // To View
             item {
-                val defaultColor = MaterialTheme.colorScheme.secondaryContainer
+                var defaultColor = MaterialTheme.colorScheme.secondaryContainer
                 var dominantColor by remember {
                     mutableStateOf(defaultColor)
                 }
@@ -92,96 +79,19 @@ fun WeatherScreen(modifier: Modifier) {
                     is WeatherState.Error -> {
                         "Weather: \n\n${stateValueCollected.message}"
                     }
-
                     is WeatherState.Success -> {
-
                         stateValueCollected.openWeatherDto?.apply {
                             if (!this.main.temp.isNaN()) {
-                                Text(
-                                    modifier = modifier
-                                        .padding(top = 32.dp, end = 8.dp, bottom = 16.dp)
-                                        .background(Color.Blue.copy(0.3f, 0.2f)),
-                                    style = TextStyle(
-                                        fontSize = 24.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.surface,
-                                        shadow = Shadow(Color.Black)
-                                    ),
-                                    text = "${stateValueCollected.openWeatherDto.name} "
-                                )
-                                Row(
-                                    modifier = Modifier
-                                        .padding(top = 4.dp, end = 4.dp, bottom = 2.dp)
-                                        .background(
-                                            MaterialTheme.colorScheme.onSurface.copy(0.3f, 0.2f)
-                                        )
-                                        .fillMaxWidth()
-                                ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .padding(top = 8.dp)
-                                            .fillMaxWidth(0.5f)
-                                    ) {
-                                        Text(
-                                            modifier = modifier
-                                                .padding(bottom = 1.dp),
-                                            fontSize = 12.sp,
-                                            text = "Current: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF.toFloat()}°F"
-                                        )
-                                        Text(
-                                            modifier = modifier
-                                                .padding(start = 2.dp),
-                                            fontSize = 12.sp,
-                                            text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F.toFloat()}°F"
-                                        )
-                                    }
-                                    Column(
-                                        modifier = Modifier
-                                            .padding(end = 8.dp)
-                                            .fillMaxWidth(0.5f)
-                                    ) {
-                                        Text(
-                                            modifier = modifier.padding(start = 0.dp),
-                                            fontSize = 12.sp,
-                                            text = "Maximum: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF_Max.toFloat()}°F"
-                                        )
-                                    }
-                                }
-
-                                Row(modifier = Modifier) {
-                                    //Load the Image
-                                    val imageUrl =
-                                        BuildConfig.ICON_URL + "wn/" + stateValueCollected.openWeatherDto.weather.first().icon + "@2x.png"
-                                    val imageState: AsyncImagePainter.State =
-                                        rememberAsyncImagePainter(
-                                            model = ImageRequest.Builder(context)
-                                                .data(imageUrl)
-                                                .size(Size.ORIGINAL)
-                                                .build()
-                                        ).state
-                                    if (imageState is AsyncImagePainter.State.Success) {
-                                        dominantColor = MaterialTheme.colorScheme.secondaryContainer
-                                        Image(
-                                            modifier = modifier
-                                                .fillMaxWidth()
-                                                .padding(6.dp)
-                                                .height(150.dp)
-                                                .clip(RoundedCornerShape(22.dp)),
-                                            painter = imageState.painter,
-                                            contentDescription = "weather_icon",
-                                            contentScale = ContentScale.Crop
-                                        )
-                                    }
-                                    //Load the Image Ends
-                                }
+                                CityTitleItem(modifier, stateValueCollected)
+                                TemperaturesItem(modifier, stateValueCollected)
+                                ImageItem(stateValueCollected, context, dominantColor, modifier)
                             }
                         }
                     }
                 }
-
             }
 
-            // For business
+            // To Business
             item {
                 Row(
                     modifier = Modifier
@@ -197,8 +107,7 @@ fun WeatherScreen(modifier: Modifier) {
                         label = { Text("Latitude") },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Decimal,
-                            showKeyboardOnFocus = false
-                        )
+                            showKeyboardOnFocus = false)
                     )
                     TextField(
                         modifier = Modifier
@@ -211,8 +120,7 @@ fun WeatherScreen(modifier: Modifier) {
                         label = { Text("Longitude") },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Decimal,
-                            showKeyboardOnFocus = false
-                        )
+                            showKeyboardOnFocus = false)
                     )
                 }
             }
@@ -234,3 +142,4 @@ fun WeatherScreen(modifier: Modifier) {
     }
 
 }
+
