@@ -92,10 +92,11 @@ fun WeatherScreen(modifier: Modifier) {
                     is WeatherState.Error -> {
                         "Weather: \n\n${stateValueCollected.message}"
                     }
+
                     is WeatherState.Success -> {
 
                         stateValueCollected.openWeatherDto?.apply {
-                            if(!this.main.temp.isNaN()) {
+                            if (!this.main.temp.isNaN()) {
                                 Text(
                                     modifier = modifier
                                         .padding(top = 32.dp, end = 8.dp, bottom = 16.dp)
@@ -106,17 +107,21 @@ fun WeatherScreen(modifier: Modifier) {
                                         color = MaterialTheme.colorScheme.surface,
                                         shadow = Shadow(Color.Black)
                                     ),
-                                    text = "${stateValueCollected.openWeatherDto.name} ")
-                                Row(modifier = Modifier
-                                    .padding(top = 4.dp, end = 4.dp, bottom = 2.dp)
-                                    .background(
-                                        MaterialTheme.colorScheme.onSurface.copy(0.3f, 0.2f)
-                                    )
-                                    .fillMaxWidth()
+                                    text = "${stateValueCollected.openWeatherDto.name} "
+                                )
+                                Row(
+                                    modifier = Modifier
+                                        .padding(top = 4.dp, end = 4.dp, bottom = 2.dp)
+                                        .background(
+                                            MaterialTheme.colorScheme.onSurface.copy(0.3f, 0.2f)
+                                        )
+                                        .fillMaxWidth()
                                 ) {
-                                    Column(modifier = Modifier
-                                        .padding(top = 8.dp)
-                                        .fillMaxWidth(0.5f)) {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(top = 8.dp)
+                                            .fillMaxWidth(0.5f)
+                                    ) {
                                         Text(
                                             modifier = modifier
                                                 .padding(bottom = 1.dp),
@@ -127,12 +132,14 @@ fun WeatherScreen(modifier: Modifier) {
                                             modifier = modifier
                                                 .padding(start = 2.dp),
                                             fontSize = 12.sp,
-                                            text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F .toFloat()}°F"
+                                            text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F.toFloat()}°F"
                                         )
                                     }
-                                    Column(modifier = Modifier
-                                        .padding(end = 8.dp)
-                                        .fillMaxWidth(0.5f)) {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(end = 8.dp)
+                                            .fillMaxWidth(0.5f)
+                                    ) {
                                         Text(
                                             modifier = modifier.padding(start = 0.dp),
                                             fontSize = 12.sp,
@@ -141,16 +148,17 @@ fun WeatherScreen(modifier: Modifier) {
                                     }
                                 }
 
-                                Row(modifier = Modifier){
+                                Row(modifier = Modifier) {
                                     //Load the Image
-                                    // https://openweathermap.org/img/wn/10d@2x.png
-                                    val imageUrl = BuildConfig.ICON_URL + "wn/" + stateValueCollected.openWeatherDto.weather.first().icon + "@2x.png"
-                                    val imageState: AsyncImagePainter.State = rememberAsyncImagePainter (
-                                        model = ImageRequest.Builder(context)
-                                            .data(imageUrl)
-                                            .size(Size.ORIGINAL)
-                                            .build()
-                                    ).state
+                                    val imageUrl =
+                                        BuildConfig.ICON_URL + "wn/" + stateValueCollected.openWeatherDto.weather.first().icon + "@2x.png"
+                                    val imageState: AsyncImagePainter.State =
+                                        rememberAsyncImagePainter(
+                                            model = ImageRequest.Builder(context)
+                                                .data(imageUrl)
+                                                .size(Size.ORIGINAL)
+                                                .build()
+                                        ).state
                                     if (imageState is AsyncImagePainter.State.Success) {
                                         dominantColor = MaterialTheme.colorScheme.secondaryContainer
                                         Image(
@@ -198,7 +206,7 @@ fun WeatherScreen(modifier: Modifier) {
                             .padding(start = 4.dp),
                         value = longitude,
                         onValueChange = { lon ->
-                            longitude =  lon
+                            longitude = lon
                         },
                         label = { Text("Longitude") },
                         keyboardOptions = KeyboardOptions(
@@ -214,7 +222,7 @@ fun WeatherScreen(modifier: Modifier) {
                         .padding(4.dp, 2.dp, 8.dp, 8.dp)
                         .fillParentMaxWidth(),
                     onClick = {
-                        if(latitude.isNotEmpty() && longitude.isNotEmpty())
+                        if (latitude.isNotEmpty() && longitude.isNotEmpty())
                             viewModel.fetchWeather(latitude, longitude)
                     },
                     content = {
@@ -222,7 +230,6 @@ fun WeatherScreen(modifier: Modifier) {
                     }
                 )
             }
-
         }
     }
 
