@@ -7,7 +7,6 @@ import retrofit2.http.Query
 
 interface OpenWeatherApi {
 
-//    latitude = 47.218102, longitude = -1.552800))
     @GET("weather")
     suspend fun getOpenWeather (
         @Query("lat") latitude : Double = 33.038334,
@@ -15,5 +14,3 @@ interface OpenWeatherApi {
         @Query("appid") appId : String = API_KEY
     ) : OpenWeatherDto
 }
-
-// https://api.openweathermap.org/data/2.5/weather?lat=47.218102&lon=-1.552800&appid=322dfe0053266222e709e2f1015aaab0
