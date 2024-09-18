@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -12,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
+import preliminary.myweatheroverview.presentation.view.OpenWeatherViewModel
 import preliminary.myweatheroverview.presentation.view.screen.WeatherScreen
 import preliminary.myweatheroverview.ui.theme.MyWeatherTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,11 +38,9 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
-
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+@Preview(showBackground = true)
+private fun WeatherScreenPreview() {
     MyWeatherTheme {
         WeatherScreen(
             modifier = Modifier.padding(16.dp)

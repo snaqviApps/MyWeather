@@ -36,7 +36,6 @@ import preliminary.myweatheroverview.presentation.view.composable.ImageItem
 import preliminary.myweatheroverview.presentation.view.composable.TemperaturesItem
 import preliminary.myweatheroverview.util.WeatherState
 
-
 @Composable
 fun WeatherScreen(modifier: Modifier) {
     val context = LocalContext.current
@@ -51,8 +50,7 @@ fun WeatherScreen(modifier: Modifier) {
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(4.dp)
-            .background(Color(0xFFECE3CA)
-            ),
+            .background(Color(0xFFECE3CA)),
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -91,7 +89,7 @@ fun WeatherScreen(modifier: Modifier) {
                 }
             }
 
-            // To Business
+            // To Business: from UI
             item {
                 Row(
                     modifier = Modifier
@@ -125,21 +123,37 @@ fun WeatherScreen(modifier: Modifier) {
                 }
             }
             item {
-                Button(
+                /**
+                 * UDF with State-Hoisting:
+                 * 1. states (below two) ------> go down
+                 *   @param latitude,
+                 *   @param longitude
+                 *
+                 * 2. event: onGetLatAndLong -----> goes Up
+                 *
+                 */
+                stateLessOnClick(
+                    onGetLatAndLong = { viewModel.fetchWeather(latitude, longitude) },
                     modifier = modifier
-                        .padding(4.dp, 2.dp, 8.dp, 8.dp)
-                        .fillParentMaxWidth(),
-                    onClick = {
-                        if (latitude.isNotEmpty() && longitude.isNotEmpty())
-                            viewModel.fetchWeather(latitude, longitude)
-                    },
-                    content = {
-                        Text("Fetch Weather")
-                    }
                 )
             }
         }
     }
-
 }
+
+@Composable
+private fun stateLessOnClick (
+    onGetLatAndLong : ()-> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+            modifier = modifier
+                .padding(4.dp, 2.dp, 8.dp, 8.dp)
+                .fillMaxWidth(),
+            onClick = onGetLatAndLong,
+            content = { Text("Fetch Weather") }
+        )
+}
+
+
 
