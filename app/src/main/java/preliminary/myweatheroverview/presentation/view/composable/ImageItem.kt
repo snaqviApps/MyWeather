@@ -32,7 +32,7 @@ fun ImageItem(
     Row(modifier = Modifier) {
         //Load the Image
         val imageUrl =
-            BuildConfig.ICON_URL + "wn/" + stateValueCollected.openWeatherDto.weather.first().icon + "@2x.png"
+            BuildConfig.ICON_URL + "wn/" + stateValueCollected.openWeatherDto?.weather?.first()?.icon + "@2x.png"
         val imageState: AsyncImagePainter.State =
             rememberAsyncImagePainter(
                 model = ImageRequest.Builder(context)

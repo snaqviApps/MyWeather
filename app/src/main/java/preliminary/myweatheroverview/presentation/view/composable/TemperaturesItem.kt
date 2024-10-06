@@ -27,34 +27,35 @@ fun TemperaturesItem (
             )
             .fillMaxWidth()
     ) {
-        Column(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .fillMaxWidth(0.5f)
-        ) {
-            Text(
-                modifier = modifier
-                    .padding(bottom = 1.dp),
-                fontSize = 12.sp,
-                text = "Current: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF.toFloat()}°F"
-            )
-            Text(
-                modifier = modifier
-                    .padding(start = 2.dp),
-                fontSize = 12.sp,
-                text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F.toFloat()}°F"
-            )
-        }
-        Column(
-            modifier = Modifier
-                .padding(end = 8.dp)
-                .fillMaxWidth(0.5f)
-        ) {
-            Text(
-                modifier = modifier.padding(start = 0.dp),
-                fontSize = 12.sp,
-                text = "Maximum: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF_Max.toFloat()}°F"
-            )
+        stateValueCollected.openWeatherDto?.let {
+            Column(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+                    .fillMaxWidth(0.5f)
+            ) {
+                Text(
+                    modifier = modifier.padding(bottom = 1.dp),
+                    fontSize = 12.sp,
+                    text = "Current: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF.toFloat()}°F"
+                )
+                Text(
+                    modifier = modifier
+                        .padding(start = 2.dp),
+                    fontSize = 12.sp,
+                    text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F.toFloat()}°F"
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .fillMaxWidth(0.5f)
+            ) {
+                Text(
+                    modifier = modifier.padding(start = 0.dp),
+                    fontSize = 12.sp,
+                    text = "Maximum: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF_Max.toFloat()}°F"
+                )
+            }
         }
     }
 }

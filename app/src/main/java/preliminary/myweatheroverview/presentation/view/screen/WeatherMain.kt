@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -65,12 +67,23 @@ fun WeatherScreen(modifier: Modifier) {
                 .padding(16.dp, 8.dp, 8.dp, 12.dp)
         ) {
 
+            val strList = listOf("Hi", "Hi 1", "Hi 2", "Hi 3", "Hi 4")
+            itemsIndexed(strList) { index, item ->
+                Text(modifier = Modifier.background(Color.LightGray),
+                    text = "$index, $item")
+            }
+
+            items(strList){
+                Text(modifier = Modifier
+                    .background(Color.LightGray),
+                    text ="using 'items': $it"
+                )
+            }
+
             // To View
             item {
                 var defaultColor = MaterialTheme.colorScheme.secondaryContainer
-                var dominantColor by remember {
-                    mutableStateOf(defaultColor)
-                }
+                var dominantColor by remember { mutableStateOf(defaultColor) }
                 when (stateValueCollected) {
                     is WeatherState.Loading -> "Loading..."
                     is WeatherState.Empty -> ""
@@ -112,9 +125,7 @@ fun WeatherScreen(modifier: Modifier) {
                             .fillMaxHeight(0.5f)
                             .padding(start = 4.dp),
                         value = longitude,
-                        onValueChange = { lon ->
-                            longitude = lon
-                        },
+                        onValueChange = { lon -> longitude = lon },
                         label = { Text("Longitude") },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Decimal,
@@ -132,7 +143,7 @@ fun WeatherScreen(modifier: Modifier) {
                  * 2. event: onGetLatAndLong -----> goes Up
                  *
                  */
-                stateLessOnClick(
+                StateLessOnClick(
                     onGetLatAndLong = { viewModel.fetchWeather(latitude, longitude) },
                     modifier = modifier
                 )
@@ -142,7 +153,7 @@ fun WeatherScreen(modifier: Modifier) {
 }
 
 @Composable
-private fun stateLessOnClick (
+private fun StateLessOnClick (
     onGetLatAndLong : ()-> Unit,
     modifier: Modifier = Modifier
 ) {

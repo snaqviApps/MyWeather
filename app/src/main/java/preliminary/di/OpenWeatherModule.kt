@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object OpenWeatherModule {
 
-    private val interceptor = HttpLoggingInterceptor().apply {
+    private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 

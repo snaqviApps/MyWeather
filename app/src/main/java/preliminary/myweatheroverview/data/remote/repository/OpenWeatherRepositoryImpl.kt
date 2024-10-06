@@ -1,7 +1,6 @@
 package preliminary.myweatheroverview.data.remote.repository
 
 import android.util.Log
-import preliminary.myweatherOverview.BuildConfig.API_KEY
 import preliminary.myweatheroverview.data.remote.OpenWeatherApi
 import preliminary.myweatheroverview.domain.OpenWeatherRepository
 import preliminary.myweatheroverview.util.WeatherState
@@ -16,7 +15,8 @@ class OpenWeatherRepositoryImpl @Inject constructor(
             WeatherState.Success(openWeatherApi.getOpenWeather(
                 latitude,
                 longitude,
-                API_KEY)
+//                API_KEY
+            )
             )
         } catch (e: Exception) {
             Log.e("Error_HTTP", "${e.message}")

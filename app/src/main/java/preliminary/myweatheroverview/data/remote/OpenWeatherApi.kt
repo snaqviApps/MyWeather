@@ -9,8 +9,8 @@ interface OpenWeatherApi {
 
     @GET("weather")
     suspend fun getOpenWeather (
-        @Query("lat") latitude : Double = 33.038334,
-        @Query("lon") longitude : Double = -97.006111,
+        @Query("lat") latitude : Double,
+        @Query("lon") longitude : Double,
         @Query("appid") appId : String = API_KEY
     ) : OpenWeatherDto
 }

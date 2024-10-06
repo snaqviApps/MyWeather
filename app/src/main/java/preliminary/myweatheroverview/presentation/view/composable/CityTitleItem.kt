@@ -10,8 +10,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import preliminary.myweatheroverview.ui.theme.MyWeatherTheme
 import preliminary.myweatheroverview.util.WeatherState
 
 
@@ -30,7 +32,15 @@ fun CityTitleItem (
             color = MaterialTheme.colorScheme.surface,
             shadow = Shadow(Color.Black)
         ),
-        text = "${stateValueCollected.openWeatherDto.name} "
+        text = "${stateValueCollected.openWeatherDto?.name} "
     )
+}
+
+@Preview
+@Composable
+fun CityTitleItemPreview() {
+    MyWeatherTheme {
+        CityTitleItem(Modifier.padding(16.dp), WeatherState.Success(null))
+    }
 }
 

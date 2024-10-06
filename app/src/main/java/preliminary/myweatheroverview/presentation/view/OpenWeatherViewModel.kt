@@ -3,7 +3,6 @@ package preliminary.myweatheroverview.presentation.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,23 +16,32 @@ class OpenWeatherViewModel @Inject constructor(
     private val openWeatherRepository: OpenWeatherRepository
 ) : ViewModel() {
 
+//   val repo = bindOpenWeatherRepository(repository: OpenWeatherRepositoryImpl) : OpenWeatherRepository
+
     private val _state = MutableStateFlow<WeatherState>(WeatherState.Empty)
     val state = _state.asStateFlow()
 
-    fun fetchWeather(latitude: String, longitude: String) = viewModelScope.launch(Dispatchers.IO) {
-        when (val response = openWeatherRepository
-            .getBriefWeather(
-                latitude = latitude.toDouble(),
-                longitude = longitude.toDouble())) {
-            WeatherState.Empty -> WeatherState.Empty
-            is WeatherState.Loading -> {
-                _state.update { WeatherState.Loading(true) }
-            }
-            is WeatherState.Error -> {
-                _state.update { WeatherState.Error(message = "an error occurred") }
-            }
-            is WeatherState.Success -> {
-                _state.update { WeatherState.Success(openWeatherDto = response.openWeatherDto) }
+    fun fetchWeather(latitude: String, longitude: String) {
+
+        viewModelScope.launch() {
+            when (val response = openWeatherRepository
+                .getBriefWeather(
+                    latitude = latitude.toDouble(),
+                    longitude = longitude.toDouble()))
+            {
+                WeatherState.Empty -> WeatherState.Empty
+                is WeatherState.Loading -> {
+                    _state.update { WeatherState.Loading(true) }
+                }
+                is WeatherState.Error -> {
+                    _state.update { WeatherState.Error(message = "an error occurred") }
+                }
+                is WeatherState.Success -> {
+
+                    _state.update {
+                        WeatherState.Success(openWeatherDto = response.openWeatherDto)
+                    }
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ sealed interface WeatherState {
 
     data object Empty : WeatherState
     data class Loading(val isLoading: Boolean = false) : WeatherState
-    data class Success(val openWeatherDto: OpenWeatherDto) : WeatherState
+    data class Success(val openWeatherDto: OpenWeatherDto?) : WeatherState
     data class Error(val message: String) : WeatherState
 
 }
