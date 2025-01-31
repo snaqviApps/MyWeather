@@ -48,8 +48,11 @@ class OpenWeatherViewModel @Inject constructor(
                  * */
             }
 
-            withContext(Dispatchers.IO) {
-                // Async-task-2: TODO:fetch weather-data on IO-light-thread
+            withContext(
+                // TODO: fetch weather-data on IO-light-thread
+                context = Dispatchers.IO
+            ) {
+                /**    %%%%   Async-task-3   %%%%   */
                 when (
                     val response = openWeatherRepository.getBriefWeather(
                         latitude = latitude.toDouble(),
