@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import preliminary.myweatheroverview.domain.OpenWeatherRepository
 import preliminary.myweatheroverview.util.WeatherState
 import javax.inject.Inject
@@ -34,7 +34,7 @@ class OpenWeatherViewModel @Inject constructor(
         ) {
             /**    %%%%   Async-task-1   %%%%   */
 
-            withContext(
+            async (
                 // TODO: use different set of light-thread
                 context = Dispatchers.Unconfined
             ) {
@@ -48,7 +48,7 @@ class OpenWeatherViewModel @Inject constructor(
                  * */
             }
 
-            withContext(
+            async(
                 // TODO: fetch weather-data on IO-light-thread
                 context = Dispatchers.IO
             ) {
