@@ -12,11 +12,8 @@ class OpenWeatherRepositoryImpl @Inject constructor(
     override suspend fun getBriefWeather(latitude: Double, longitude: Double
     ): WeatherState {
         val weatherState : WeatherState = try {
-            WeatherState.Success(openWeatherApi.getOpenWeather(
-                latitude,
-                longitude,
-//                API_KEY
-            )
+            WeatherState.Success(
+                openWeatherApi.getOpenWeather(latitude, longitude)
             )
         } catch (e: Exception) {
             Log.e("Error_HTTP", "${e.message}")

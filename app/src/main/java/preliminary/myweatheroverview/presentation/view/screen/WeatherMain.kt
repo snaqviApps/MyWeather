@@ -67,23 +67,23 @@ fun WeatherScreen(modifier: Modifier) {
                 .padding(16.dp, 8.dp, 8.dp, 12.dp)
         ) {
 
-            val strList = listOf("Hi", "Hi 1", "Hi 2", "Hi 3", "Hi 4")
-            itemsIndexed(strList) { index, item ->
-                Text(modifier = Modifier.background(Color.LightGray),
-                    text = "$index, $item")
-            }
-
-            items(strList){
-                Text(modifier = Modifier
-                    .background(Color.LightGray),
-                    text ="using 'items': $it"
-                )
-            }
+//            val strList = listOf("Hi", "Hi 1", "Hi 2", "Hi 3", "Hi 4")
+//            itemsIndexed(strList) { index, item ->
+//                Text(modifier = Modifier.background(Color.LightGray),
+//                    text = "$index, $item")
+//            }
+//
+//            items(strList){
+//                Text(modifier = Modifier
+//                    .background(Color.LightGray),
+//                    text ="using 'items': $it"
+//                )
+//            }
 
             // To View
             item {
                 var defaultColor = MaterialTheme.colorScheme.secondaryContainer
-                var dominantColor by remember { mutableStateOf(defaultColor) }
+                val dominantColor by remember { mutableStateOf(defaultColor) }
                 when (stateValueCollected) {
                     is WeatherState.Loading -> "Loading..."
                     is WeatherState.Empty -> ""
