@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import preliminary.myweatheroverview.ui.theme.MyWeatherTheme
+import preliminary.myweatheroverview.presentation.ui.theme.MyWeatherTheme
 import preliminary.myweatheroverview.util.WeatherState
 
 
@@ -25,7 +25,7 @@ fun CityTitleItem (
     Text(
         modifier = modifier
             .padding(top = 32.dp, end = 8.dp, bottom = 16.dp)
-            .background(Color.Blue.copy(0.3f, 0.2f)),
+            .background(Color.Blue.copy(0.5f, 0.2f)),
         style = TextStyle(
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,

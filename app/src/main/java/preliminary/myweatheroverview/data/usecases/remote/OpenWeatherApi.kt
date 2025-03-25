@@ -1,7 +1,7 @@
-package preliminary.myweatheroverview.data.remote
+package preliminary.myweatheroverview.data.usecases.remote
 
 import preliminary.myweatherOverview.BuildConfig.API_KEY
-import preliminary.myweatheroverview.data.remote.response.OpenWeatherDto
+import preliminary.myweatheroverview.data.usecases.remote.response.OpenWeatherDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

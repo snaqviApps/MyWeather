@@ -1,4 +1,4 @@
-package preliminary.myweatheroverview.ui.theme
+package preliminary.myweatheroverview.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

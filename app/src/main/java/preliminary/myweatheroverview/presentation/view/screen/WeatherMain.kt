@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -22,16 +20,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import preliminary.myweatherOverview.R
+import preliminary.myweatheroverview.presentation.ui.theme.MyWeatherTheme
 import preliminary.myweatheroverview.presentation.view.OpenWeatherViewModel
 import preliminary.myweatheroverview.presentation.view.composable.CityTitleItem
 import preliminary.myweatheroverview.presentation.view.composable.ImageItem
@@ -39,10 +38,12 @@ import preliminary.myweatheroverview.presentation.view.composable.TemperaturesIt
 import preliminary.myweatheroverview.util.WeatherState
 
 @Composable
-fun WeatherScreen(modifier: Modifier) {
+fun WeatherScreen(
+    modifier: Modifier,
+    viewModelWeather: OpenWeatherViewModel
+) {
     val context = LocalContext.current
-    val viewModel = hiltViewModel<OpenWeatherViewModel>()
-    val stateValueCollected = viewModel.state.collectAsState().value
+    val stateValueCollected = viewModelWeather.state.collectAsState().value
 
     var latitude by remember { mutableStateOf("32.779167") }
     var longitude by rememberSaveable { mutableStateOf("-96.808891") }
@@ -50,10 +51,10 @@ fun WeatherScreen(modifier: Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(4.dp)
+//            .fillMaxHeight()
+            .padding(start = 2.dp, top = 16.dp)
             .background(Color(0xFFECE3CA)),
-        contentAlignment = Alignment.Center
+//        contentAlignment = Alignment.BottomCenter
     ) {
         Image(
             painter = painterResource(id = R.drawable.background),
@@ -82,7 +83,7 @@ fun WeatherScreen(modifier: Modifier) {
 
             // To View
             item {
-                var defaultColor = MaterialTheme.colorScheme.secondaryContainer
+                var defaultColor = MaterialTheme.colorScheme.surface
                 val dominantColor by remember { mutableStateOf(defaultColor) }
                 when (stateValueCollected) {
                     is WeatherState.Loading -> "Loading..."
@@ -137,14 +138,14 @@ fun WeatherScreen(modifier: Modifier) {
                 /**
                  * UDF with State-Hoisting:
                  * 1. states (below two) ------> go down
-                 *   @param latitude,
-                 *   @param longitude
+                 *   param: latitude,
+                 *   param: longitude
                  *
                  * 2. event: onGetLatAndLong -----> goes Up
                  *
                  */
                 StateLessOnClick(
-                    onGetLatAndLong = { viewModel.fetchWeather(latitude, longitude) },
+                    onGetLatAndLong = { viewModelWeather.fetchWeather(latitude, longitude) },
                     modifier = modifier
                 )
             }
@@ -154,8 +155,8 @@ fun WeatherScreen(modifier: Modifier) {
 
 @Composable
 private fun StateLessOnClick (
-    onGetLatAndLong : ()-> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onGetLatAndLong : ()-> Unit
 ) {
     Button(
             modifier = modifier
@@ -164,6 +165,17 @@ private fun StateLessOnClick (
             onClick = onGetLatAndLong,
             content = { Text("Fetch Weather") }
         )
+}
+
+@Composable
+@Preview(showBackground = true)
+private fun WeatherScreenPreview() {
+    MyWeatherTheme {
+        WeatherScreen(
+            modifier = Modifier.padding(16.dp),
+            viewModelWeather = viewModel()
+        )
+    }
 }
 
 

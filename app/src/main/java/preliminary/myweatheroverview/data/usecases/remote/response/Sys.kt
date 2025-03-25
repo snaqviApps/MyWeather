@@ -1,4 +1,4 @@
-package preliminary.myweatheroverview.data.remote.response
+package preliminary.myweatheroverview.data.usecases.remote.response
 
 
 import com.google.gson.annotations.SerializedName

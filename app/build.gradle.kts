@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "preliminary.myweatherOverview"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -95,7 +95,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // Import the Firebase BoM
-    implementation(libs.firebase.bom)
+    implementation(platform(libs.firebase.bom))
 
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies

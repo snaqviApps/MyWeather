@@ -7,7 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import preliminary.myweatherOverview.BuildConfig.BASE_URL
-import preliminary.myweatheroverview.data.remote.OpenWeatherApi
+import preliminary.myweatheroverview.data.usecases.remote.OpenWeatherApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

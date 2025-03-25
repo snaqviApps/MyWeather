@@ -1,7 +1,7 @@
-package preliminary.myweatheroverview.data.remote.repository
+package preliminary.myweatheroverview.data.usecases.remote.repository
 
 import android.util.Log
-import preliminary.myweatheroverview.data.remote.OpenWeatherApi
+import preliminary.myweatheroverview.data.usecases.remote.OpenWeatherApi
 import preliminary.myweatheroverview.domain.OpenWeatherRepository
 import preliminary.myweatheroverview.util.WeatherState
 import javax.inject.Inject

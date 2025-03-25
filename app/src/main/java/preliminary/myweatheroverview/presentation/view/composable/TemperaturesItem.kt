@@ -9,9 +9,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import preliminary.myweatheroverview.data.remote.response.toTemperatureScales
+import preliminary.myweatheroverview.data.usecases.remote.response.toTemperatureScales
 import preliminary.myweatheroverview.util.WeatherState
 
 @Composable
@@ -23,7 +24,7 @@ fun TemperaturesItem (
         modifier = Modifier
             .padding(top = 4.dp, end = 4.dp, bottom = 2.dp)
             .background(
-                MaterialTheme.colorScheme.onSurface.copy(0.3f, 0.2f)
+                MaterialTheme.colorScheme.onSurface.copy(0.6f, 0.2f)
             )
             .fillMaxWidth()
     ) {
@@ -34,13 +35,14 @@ fun TemperaturesItem (
                     .fillMaxWidth(0.5f)
             ) {
                 Text(
+                    color = Color.Black,
                     modifier = modifier.padding(bottom = 1.dp),
                     fontSize = 12.sp,
                     text = "Current: ${stateValueCollected.openWeatherDto.toTemperatureScales().tempF.toFloat()}°F"
                 )
                 Text(
-                    modifier = modifier
-                        .padding(start = 2.dp),
+                    color = Color.Black,
+                    modifier = modifier.padding(start = 2.dp),
                     fontSize = 12.sp,
                     text = "Feels: ${stateValueCollected.openWeatherDto.toTemperatureScales().feelsLike_F.toFloat()}°F"
                 )

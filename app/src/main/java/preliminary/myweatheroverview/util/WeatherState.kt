@@ -1,6 +1,6 @@
 package preliminary.myweatheroverview.util
 
-import preliminary.myweatheroverview.data.remote.response.OpenWeatherDto
+import preliminary.myweatheroverview.data.usecases.remote.response.OpenWeatherDto
 
 sealed interface WeatherState {
 
